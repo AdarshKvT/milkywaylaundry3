@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "7983686899",
+    "firebase_url": "https://milkywaylaundry3.firebaseio.com",
+    "project_id": "milkywaylaundry3",
+    "storage_bucket": "milkywaylaundry3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7983686899:android:f955181cdac50d78",
+        "android_client_info": {
+          "package_name": "com.example.milkywaylaundry3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7983686899-ka7utqn0i21qu3u3b9madq8jpd5cul10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.milkywaylaundry3",
+            "certificate_hash": "e2e95097894d1c0b5f52f11c9e67470dd9d9e7fc"
+          }
+        },
+        {
+          "client_id": "7983686899-kh10osudivujpn6u1q2k4p0oi628shsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCES219d7zN-Ryz_U8-R9pdyUAS3JY_8y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7983686899-kh10osudivujpn6u1q2k4p0oi628shsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
