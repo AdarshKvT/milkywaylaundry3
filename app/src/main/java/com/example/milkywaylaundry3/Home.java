@@ -194,4 +194,3 @@ public class Home extends AppCompatActivity
 }
 
 
-//try1
