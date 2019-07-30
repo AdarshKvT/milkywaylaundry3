@@ -46,7 +46,7 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
                         //check if user not exist in database
 
@@ -54,6 +54,8 @@ public class SignIn extends AppCompatActivity {
 
                             //Get User Info
                             User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
+                            user.setPhone(edtPhone.getText().toString());  //set phone
+                        //    assert user != null;
                             assert user != null;
                             if (user.getPassword().equals(edtPassword.getText().toString())) {
 
@@ -76,7 +78,7 @@ public class SignIn extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
@@ -85,5 +87,4 @@ public class SignIn extends AppCompatActivity {
         });
     }
 }
-
 

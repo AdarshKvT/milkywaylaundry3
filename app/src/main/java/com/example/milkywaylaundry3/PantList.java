@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,8 @@ public class PantList extends AppCompatActivity {
         //Get intent here
         if ((getIntent() != null))
            categoryId = getIntent().getStringExtra("CategoryId");
-        if (!categoryId.isEmpty() && categoryId != null)
+        assert categoryId != null;
+        if (!categoryId.isEmpty())
         {
             loadListPANT(categoryId);
         }
@@ -71,14 +73,17 @@ public class PantList extends AppCompatActivity {
                 //                } catch (Exception e) {
                 //                    e.printStackTrace();
                 //                }
-        //        Picasso.with(getBaseContext()).load(model.getImage())
+        //        Picasso.with(getBaseContext()).load(model.getImage() )
           //           .into(viewHolder.pant_image);
 
                 final Pant local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(PantList.this,""+local.getName(),Toast.LENGTH_SHORT).show();
+                        //Start new Activity
+                        Intent pantDetail = new Intent(PantList.this, PantDetail.class);
+                        pantDetail.putExtra("PantId",adapter.getRef(position).getKey()); //Send PantId to another activity
+                        startActivity(pantDetail);
                     }
                 });
 

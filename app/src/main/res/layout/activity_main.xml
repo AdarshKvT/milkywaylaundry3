@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ironbw"
+    android:background="@drawable/woodenblack"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -14,10 +14,10 @@
         android:layout_centerInParent="true">
 
 
-        <ImageView
+   <!--     <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/logomilkyway" />
+            android:src="@drawable/logomilkyway" />  -->
 
         <TextView
             android:gravity="center"

@@ -1,3 +1,4 @@
+/*
 package com.example.milkywaylaundry3;
 
 import androidx.annotation.NonNull;
@@ -49,7 +50,7 @@ public class SignUp extends AppCompatActivity {
 
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
                         //check if already user phone exist
                         if (dataSnapshot.child(edtPhone.getText().toString()).exists())
@@ -69,7 +70,7 @@ public class SignUp extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
@@ -79,3 +80,5 @@ public class SignUp extends AppCompatActivity {
 
     }
 }
+
+*/

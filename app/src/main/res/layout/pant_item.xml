@@ -14,7 +14,7 @@
 
      <ImageView
             android:id="@+id/pant_image"
-            android:src="@drawable/ironbw"
+            android:src="@drawable/woodenblack"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

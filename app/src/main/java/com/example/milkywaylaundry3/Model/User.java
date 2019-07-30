@@ -4,18 +4,29 @@ public class User {
 
     private String Name;
     private String Password;
+    private String Phone;
 
 //constructor none
     public User() {
     }
 
     //contructer
-    public User(String name, String password) {
+
+    public User(String name, String password, String phone) {
         Name = name;
         Password = password;
+        Phone = phone;
     }
 
-    //getter setter
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+//getter setter
 
     public String getName() {
         return Name;

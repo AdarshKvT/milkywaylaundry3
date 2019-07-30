@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import static com.example.milkywaylaundry3.Common.Common.currentUser;
+
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -92,7 +94,8 @@ public class Home extends AppCompatActivity
         //Set Name for user
         View headerView = navigationView.getHeaderView(0);
         txtFullName = (TextView)headerView.findViewById(R.id.txtFillName);
-        txtFullName.setText(Common.currentUser.getName());
+        assert currentUser != null;
+        txtFullName.setText(currentUser.getName());
 
         //Load Menu
        recyler_menu = (RecyclerView) findViewById(R.id.recycler_menu);
