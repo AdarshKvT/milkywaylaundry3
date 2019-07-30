@@ -60,6 +60,7 @@ public class PantDetail extends AppCompatActivity {
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                assert currentPant != null;
                 new Database(getBaseContext()).addTocart(new Order(
                         pantId,
                         currentPant.getName(),
@@ -99,11 +100,11 @@ public class PantDetail extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currentPant = dataSnapshot.getValue(Pant.class);
 
-              // Set Image
+/*              // Set Image
                 assert currentPant != null;
                 Picasso.with(getBaseContext()).load(currentPant.getImage())
                         .into(pant_image);
-                collapsingToolbarLayout.setTitle(currentPant.getName());
+                collapsingToolbarLayout.setTitle(currentPant.getName());*/
 
 
                 pant_price.setText(currentPant.getPrice());
