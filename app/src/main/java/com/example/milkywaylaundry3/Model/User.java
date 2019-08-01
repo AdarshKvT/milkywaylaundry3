@@ -12,10 +12,10 @@ public class User {
 
     //contructer
 
-    public User(String name, String password, String phone) {
+    public User(String name, String password /*String phone*/) {
         Name = name;
         Password = password;
-        Phone = phone;
+  //      Phone = phone;
     }
 
     public String getPhone() {

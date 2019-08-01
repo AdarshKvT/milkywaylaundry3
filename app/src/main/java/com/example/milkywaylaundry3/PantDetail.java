@@ -61,7 +61,7 @@ public class PantDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 assert currentPant != null;
-                new Database(getBaseContext()).addTocart(new Order(
+                new Database(getBaseContext()).addToCart(new Order(
                         pantId,
                         currentPant.getName(),
                         numberButton.getNumber()
@@ -107,6 +107,7 @@ public class PantDetail extends AppCompatActivity {
                 collapsingToolbarLayout.setTitle(currentPant.getName());*/
 
 
+                assert currentPant != null;
                 pant_price.setText(currentPant.getPrice());
 
                 pant_name.setText(currentPant.getName());
