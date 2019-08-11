@@ -3,7 +3,7 @@ package com.example.milkywaylaundry3.Model;
 public class Pant {
     private String Name, Image, Price,  MenuId;
 
-    //contructor for class
+    //constructor for class
     public Pant() {
     }
     //constructor fro all variable/model

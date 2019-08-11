@@ -1,21 +1,27 @@
 package com.example.milkywaylaundry3;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+
 
 import com.example.milkywaylaundry3.Interface.ItemClickListener;
+import com.example.milkywaylaundry3.Model.Category;
 import com.example.milkywaylaundry3.Model.Pant;
 import com.example.milkywaylaundry3.ViewHolder.PantViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 public class PantList extends AppCompatActivity {
@@ -27,6 +33,7 @@ public class PantList extends AppCompatActivity {
     DatabaseReference pantList;
 
     String categoryId="";
+
     FirebaseRecyclerAdapter<Pant, PantViewHolder>adapter;
 
     @Override
@@ -46,7 +53,7 @@ public class PantList extends AppCompatActivity {
 
         //Get intent here
         if ((getIntent() != null))
-           categoryId = getIntent().getStringExtra("CategoryId");
+            categoryId = getIntent().getStringExtra("CategoryId");
         assert categoryId != null;
         if (!categoryId.isEmpty())
         {
@@ -55,31 +62,45 @@ public class PantList extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null)
+            adapter.startListening();
+
+    }
+
     private void loadListPANT(String categoryId) {
-        adapter = new FirebaseRecyclerAdapter<Pant, PantViewHolder>(Pant.class,
-                R.layout.pant_item,
-                PantViewHolder.class,
 
-                //      pantList.orderByChild("MenuId").equalTo(categoryId))
+        Query getPantList = pantList.orderByChild("MenuId").equalTo(categoryId);
+        FirebaseRecyclerOptions<Pant> pantoptions = new FirebaseRecyclerOptions.Builder<Pant>()
+                .setQuery(getPantList,Pant.class)
+                .build();
 
-                pantList.orderByChild(String.valueOf(("MenuID").equals(categoryId)))){
+        adapter = new FirebaseRecyclerAdapter<Pant, PantViewHolder>(pantoptions) {
+
+            @NonNull
             @Override
-           protected void populateViewHolder(PantViewHolder viewHolder, Pant model, int position) {
-                viewHolder.pant_name.setText(model.getName());
+            public PantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext())
+                        .inflate( R.layout.pant_item,parent,false);
+                return new PantViewHolder(itemView);
+            }
 
-          //      try {
-                //                    Picasso.with(getBaseContext()).load(model.getImage())
-                //                            .into(viewHolder.pant_image);
-                //                } catch (Exception e) {
-                //                    e.printStackTrace();
-                //                }
-        //        Picasso.with(getBaseContext()).load(model.getImage() )
-          //           .into(viewHolder.pant_image);
+
+            @Override
+            protected void onBindViewHolder(PantViewHolder viewHolder, int position, final Pant model) {
+
+                viewHolder.pant_name.setText(model.getName());
+                //viewHolder.pant_name.setText(String.format("%s",model.getName().toString()));
+                viewHolder.pant_price.setText(String.format("$ %s", model.getPrice().toString()));
+
 
                 final Pant local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
+
                         //Start new Activity
                         Intent pantDetail = new Intent(PantList.this, PantDetail.class);
                         pantDetail.putExtra("PantId",adapter.getRef(position).getKey()); //Send PantId to another activity
@@ -87,12 +108,28 @@ public class PantList extends AppCompatActivity {
                     }
                 });
 
-           }
-       };
+            }
+        };
 
+/*            @NonNull
+            @Override
+            public PantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext())
+                        .inflate( R.layout.pant_item,parent,false);
+                return new PantViewHolder(itemView);
+            }
+        };
+        */
+
+        adapter.startListening();
         //Set Adapter
-        Log.d("TAG",""+adapter.getItemCount());
         recyclerView.setAdapter(adapter);
+    }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

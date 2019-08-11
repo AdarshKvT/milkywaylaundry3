@@ -12,13 +12,12 @@ import com.example.milkywaylaundry3.R;
 
 public class PantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView pant_name;
-    public ImageView pant_image;
+    public TextView pant_name, pant_price;
+    //public ImageView pant_image;
 
     private ItemClickListener itemClickListener;
 
     //generate setter onClick
-
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -28,7 +27,8 @@ public class PantViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         super(itemView);
 
         pant_name = (TextView)itemView.findViewById(R.id.pant_name);
-        pant_image = (ImageView)itemView.findViewById(R.id.pant_image);
+        //pant_image = (ImageView)itemView.findViewById(R.id.pant_image);
+        pant_price =  (TextView)itemView.findViewById(R.id.pant_price);
 
         itemView.setOnClickListener(this);
 

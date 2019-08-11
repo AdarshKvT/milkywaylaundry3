@@ -8,10 +8,12 @@ import com.example.milkywaylaundry3.Interface.ItemClickListener;
 import com.example.milkywaylaundry3.Model.Category;
 import com.example.milkywaylaundry3.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -29,10 +31,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,59 +100,78 @@ public class Home extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         txtFullName = (TextView)headerView.findViewById(R.id.txtFillName);
         assert currentUser != null;
+        if (txtFullName == null) throw new AssertionError();
         txtFullName.setText(currentUser.getName());
 
         //Load Menu
-       recyler_menu = (RecyclerView) findViewById(R.id.recycler_menu);
-       recyler_menu.setHasFixedSize(true);
-       layoutManager = new LinearLayoutManager(this);
-       recyler_menu.setLayoutManager(layoutManager);
+        recyler_menu = (RecyclerView) findViewById(R.id.recycler_menu);
+        recyler_menu.setHasFixedSize(true);
+        recyler_menu.setLayoutManager(new GridLayoutManager(this, 2));
 
         Log.d("==>","above load()");
 
-       loadMenu();
+        loadMenu();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //FIx Back Button Category loading
+        if (adapter != null)
+            adapter.startListening();
     }
 
     private void loadMenu() {
 
-        Log.d("==>","IN load()");
-        adapter = new FirebaseRecyclerAdapter<Category,MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+        FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>()
+                .setQuery(category,Category.class)
+                .build();
+
+        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
+
+            @NonNull
             @Override
-            protected void populateViewHolder(MenuViewHolder ViewHolder, Category model, int position) {
-                ViewHolder.txtMenuName.setText(model.getName());
+            public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.menu_item,parent,false);
+                return  new MenuViewHolder(itemView);
+            }
 
-          //      Picasso.with(getBaseContext()).load(R.drawable.ic_menu_gallery). into(ViewHolder.imageView);
+            @Override
+            protected void onBindViewHolder(MenuViewHolder viewHolder, int position, Category model) {
+                viewHolder.txtMenuName.setText(model.getName());
 
-               Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);
+              /*  Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);*/
 
-           //    try {
-           //     Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);
-          //    } catch (Exception e) {
-           //        e.printStackTrace();
-           //   }
+                try {
+                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-          //    Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);
-
-                Log.d("==>","IN load()");
                 final Category clickItem = model;
-                ViewHolder.setItemClickListener(new ItemClickListener() {
+                viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-               //         Toast.makeText(Home.this, ""+clickItem.getName(),Toast.LENGTH_SHORT).show();
-
                         //Get CategoryId and send to new Activity
-                       Intent pantList = new Intent(Home.this,PantList.class);
-                       //CategoryId is a key,
-                       pantList.putExtra("CategoryId",adapter.getRef(position).getKey());
-                       startActivity(pantList);
+                        Intent pantList = new Intent(Home.this,PantList.class);
+                        //CategoryId is a key,
+                        pantList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        startActivity(pantList);
                     }
                 });
-
-
             }
         };
+
+        adapter.startListening();
         recyler_menu.setAdapter(adapter);
+    }
+    //ctrl
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     @Override

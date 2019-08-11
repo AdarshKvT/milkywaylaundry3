@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".PantList">
 
+    <!---->
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_pant"
         android:scrollbars="vertical">
-
 
     </androidx.recyclerview.widget.RecyclerView>
 

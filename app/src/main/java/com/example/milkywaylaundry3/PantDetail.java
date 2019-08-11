@@ -45,7 +45,7 @@ public class PantDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       //  setContentView(R.layout.activity_pant_detail);
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.activity_pant_detail);
 
 
         //Firebase
@@ -65,7 +65,7 @@ public class PantDetail extends AppCompatActivity {
                         pantId,
                         currentPant.getName(),
                         numberButton.getNumber()
-                   //    currentPant.getDiscount()
+                        //currentPant.getDiscount()
 
                 ));
 
@@ -74,20 +74,17 @@ public class PantDetail extends AppCompatActivity {
         });
 
 
-        pant_description = (TextView) findViewById(R.id.pant_description);
+        //pant_description = (TextView) findViewById(R.id.pant_description);
         pant_name = (TextView) findViewById(R.id.pant_name);
         pant_price = (TextView) findViewById(R.id.pant_price);
-//      pant_image = (ImageView) findViewById(R.id.img);
+        //pant_image = (ImageView) findViewById(R.id.img);
 
-/*        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing);
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);*/
 
-        //Get Food Id from Intent
+        //Get Pant Id from Intent
         if (getIntent() !=null)
-            pantId = getIntent().getStringExtra("PantId");
-        assert pantId != null;
-        if (!pantId.isEmpty()){
+            pantId = getIntent().getStringExtra("categoryId");
+       // assert pantId != null;
+        if (pantId != null && !pantId.isEmpty()) {
             getDetailPant(pantId);
         }
 
@@ -99,21 +96,10 @@ public class PantDetail extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currentPant = dataSnapshot.getValue(Pant.class);
-
-/*              // Set Image
-                assert currentPant != null;
-                Picasso.with(getBaseContext()).load(currentPant.getImage())
-                        .into(pant_image);
-                collapsingToolbarLayout.setTitle(currentPant.getName());*/
-
-
                 assert currentPant != null;
                 pant_price.setText(currentPant.getPrice());
-
                 pant_name.setText(currentPant.getName());
-
-       //       pant_description.setText(pant.getDescription());
-
+                //pant_description.setText(pant.getDescription());
 
             }
 
@@ -128,4 +114,7 @@ public class PantDetail extends AppCompatActivity {
 
 
 }
+
+
+
 
