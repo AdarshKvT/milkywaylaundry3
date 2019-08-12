@@ -2,47 +2,34 @@ package com.example.milkywaylaundry3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.andremion.counterfab.CounterFab;
-import com.example.milkywaylaundry3.Common.Common;
 import com.example.milkywaylaundry3.Database.Database;
 import com.example.milkywaylaundry3.Interface.ItemClickListener;
 import com.example.milkywaylaundry3.Model.Category;
 import com.example.milkywaylaundry3.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
-import android.view.MenuItem;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.Menu;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 import static com.example.milkywaylaundry3.Common.Common.currentUser;
 
@@ -57,8 +44,7 @@ public class Home extends AppCompatActivity
     RecyclerView recyler_menu;
     RecyclerView.LayoutManager layoutManager;
 
-    FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
-
+    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
 
 
 //   Category model;
@@ -79,8 +65,7 @@ public class Home extends AppCompatActivity
         category = database.getReference("Category");
 
 
-
-        CounterFab fab =(CounterFab) findViewById(R.id.fab);
+        CounterFab fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,17 +88,17 @@ public class Home extends AppCompatActivity
 
         //Set Name for user
         View headerView = navigationView.getHeaderView(0);
-        txtFullName = (TextView)headerView.findViewById(R.id.txtFillName);
-        assert currentUser != null;
-        if (txtFullName == null) throw new AssertionError();
-        txtFullName.setText(currentUser.getName());
+        txtFullName = (TextView) headerView.findViewById(R.id.txtFillName);
+
+        if (currentUser != null)
+            txtFullName.setText(currentUser.getName());
 
         //Load Menu
         recyler_menu = (RecyclerView) findViewById(R.id.recycler_menu);
         recyler_menu.setHasFixedSize(true);
         recyler_menu.setLayoutManager(new GridLayoutManager(this, 2));
 
-        Log.d("==>","above load()");
+        Log.d("==>", "above load()");
 
         loadMenu();
 
@@ -130,7 +115,7 @@ public class Home extends AppCompatActivity
     private void loadMenu() {
 
         FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>()
-                .setQuery(category,Category.class)
+                .setQuery(category, Category.class)
                 .build();
 
         adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
@@ -139,15 +124,15 @@ public class Home extends AppCompatActivity
             @Override
             public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.menu_item,parent,false);
-                return  new MenuViewHolder(itemView);
+                        .inflate(R.layout.menu_item, parent, false);
+                return new MenuViewHolder(itemView);
             }
 
             @Override
             protected void onBindViewHolder(MenuViewHolder viewHolder, int position, Category model) {
                 viewHolder.txtMenuName.setText(model.getName());
 
-              /*  Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);*/
+                /*  Picasso.with(getBaseContext()).load(model.getImage()).into(ViewHolder.imageView);*/
 
                 try {
                     Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
@@ -160,9 +145,9 @@ public class Home extends AppCompatActivity
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         //Get CategoryId and send to new Activity
-                        Intent pantList = new Intent(Home.this,PantList.class);
+                        Intent pantList = new Intent(Home.this, PantList.class);
                         //CategoryId is a key,
-                        pantList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        pantList.putExtra("CategoryId", adapter.getRef(position).getKey());
                         startActivity(pantList);
                     }
                 });
@@ -172,6 +157,7 @@ public class Home extends AppCompatActivity
         adapter.startListening();
         recyler_menu.setAdapter(adapter);
     }
+
     //ctrl
     @Override
     protected void onStop() {

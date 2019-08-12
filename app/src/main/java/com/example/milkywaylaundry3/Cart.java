@@ -1,18 +1,17 @@
 package com.example.milkywaylaundry3;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.milkywaylaundry3.Common.Common;
 import com.example.milkywaylaundry3.Database.Database;
@@ -133,7 +132,6 @@ public class Cart extends AppCompatActivity {
         int total = 0;
         for (Order order : cart) {
             try {
-                assert order != null;
                 total += (Integer.parseInt(order.getPrice()) * (Integer.parseInt(order.getQuantity())));
             } catch (Exception e) {
                 e.printStackTrace();

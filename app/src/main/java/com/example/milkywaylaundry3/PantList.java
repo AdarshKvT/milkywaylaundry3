@@ -115,14 +115,13 @@ public class PantList extends AppCompatActivity {
                      }
                  });
 
-                final Pant local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
 
                         //Start new Activity
                         Intent pantDetail = new Intent(PantList.this, PantDetail.class);
-                        pantDetail.putExtra("PantId",adapter.getRef(position).getKey()); //Send PantId to another activity
+                        pantDetail.putExtra("PANT",adapter.getItem(position)); //Send PantId to another activity
                         startActivity(pantDetail);
                     }
                 });
