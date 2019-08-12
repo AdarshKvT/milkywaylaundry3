@@ -3,7 +3,9 @@ package com.example.milkywaylaundry3;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.andremion.counterfab.CounterFab;
 import com.example.milkywaylaundry3.Common.Common;
+import com.example.milkywaylaundry3.Database.Database;
 import com.example.milkywaylaundry3.Interface.ItemClickListener;
 import com.example.milkywaylaundry3.Model.Category;
 import com.example.milkywaylaundry3.ViewHolder.MenuViewHolder;
@@ -78,7 +80,7 @@ public class Home extends AppCompatActivity
 
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        CounterFab fab =(CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +89,9 @@ public class Home extends AppCompatActivity
 
             }
         });
+
+        fab.setCount(new Database(this).getCountCart());
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

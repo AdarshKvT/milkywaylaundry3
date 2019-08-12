@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
+import com.example.milkywaylaundry3.Database.Database;
 import com.example.milkywaylaundry3.Interface.ItemClickListener;
 import com.example.milkywaylaundry3.Model.Category;
+import com.example.milkywaylaundry3.Model.Order;
 import com.example.milkywaylaundry3.Model.Pant;
 import com.example.milkywaylaundry3.ViewHolder.PantViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -70,7 +73,9 @@ public class PantList extends AppCompatActivity {
 
     }
 
+
     private void loadListPANT(String categoryId) {
+
 
         Query getPantList = pantList.orderByChild("MenuId").equalTo(categoryId);
         FirebaseRecyclerOptions<Pant> pantoptions = new FirebaseRecyclerOptions.Builder<Pant>()
@@ -89,12 +94,27 @@ public class PantList extends AppCompatActivity {
 
 
             @Override
-            protected void onBindViewHolder(PantViewHolder viewHolder, int position, final Pant model) {
-
-                viewHolder.pant_name.setText(model.getName());
+            protected void onBindViewHolder(PantViewHolder viewHolder, final int position, final Pant model) {
+                //viewHolder.pant_name.setText(model.getName());
                 //viewHolder.pant_name.setText(String.format("%s",model.getName().toString()));
                 viewHolder.pant_price.setText(String.format("$ %s", model.getPrice().toString()));
 
+
+                //Quick Cart
+                 viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
+                         new Database(getBaseContext()).addToCart(new Order(
+                                 adapter.getRef(position).getKey(),
+                                 model.getName(),
+                                 "1",
+                                 model.getPrice()
+                                 //currentPant.getDiscount()
+                         ));
+
+                         Toast.makeText(PantList.this,"Added to Cart",Toast.LENGTH_SHORT).show();
+                     }
+                 });
 
                 final Pant local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -111,15 +131,6 @@ public class PantList extends AppCompatActivity {
             }
         };
 
-/*            @NonNull
-            @Override
-            public PantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext())
-                        .inflate( R.layout.pant_item,parent,false);
-                return new PantViewHolder(itemView);
-            }
-        };
-        */
 
         adapter.startListening();
         //Set Adapter

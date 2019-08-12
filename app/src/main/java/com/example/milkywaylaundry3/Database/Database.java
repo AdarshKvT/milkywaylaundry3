@@ -14,6 +14,7 @@ import java.util.List;
 public class Database extends SQLiteAssetHelper {
     private static final String DB_NAME = "MilkywaywashDB.db";
     private static final int DB_VER = 1;
+    //private int countCart;
 
     public Database(Context context) {
         super(context, DB_NAME, null, DB_VER);
@@ -64,4 +65,23 @@ public class Database extends SQLiteAssetHelper {
         String query = String.format("DELETE FROM OrderDetail");
         db.execSQL(query);
     }
+
+    public int getCountCart() {
+        int count=0;
+        SQLiteDatabase db = getReadableDatabase();
+        String query = String.format("SELECT COUNT(*) FROM OrderDetail");
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.getCount() <= 0)
+        {
+           do {
+               count = cursor.getInt(0);
+           }while (cursor.moveToNext());
+        }
+        
+        return count;
+    }
+
+/*    public void setCountCart(int countCart) {
+        this.countCart = countCart;
+    }*/
 }

@@ -13,6 +13,7 @@ import com.example.milkywaylaundry3.R;
 public class PantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView pant_name, pant_price;
+    public ImageView quick_cart;
     //public ImageView pant_image;
 
     private ItemClickListener itemClickListener;
@@ -26,9 +27,12 @@ public class PantViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public PantViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        //if (pant_name == null) throw new AssertionError();
+
         pant_name = (TextView)itemView.findViewById(R.id.pant_name);
         //pant_image = (ImageView)itemView.findViewById(R.id.pant_image);
         pant_price =  (TextView)itemView.findViewById(R.id.pant_price);
+        quick_cart = (ImageView)itemView.findViewById(R.id.btn_quick_cart);
 
         itemView.setOnClickListener(this);
 

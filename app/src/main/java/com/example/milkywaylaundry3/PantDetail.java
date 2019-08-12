@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andremion.counterfab.CounterFab;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.milkywaylaundry3.Database.Database;
 import com.example.milkywaylaundry3.Model.Order;
@@ -27,7 +28,8 @@ public class PantDetail extends AppCompatActivity {
     TextView pant_name, pant_price, pant_description;
     ImageView pant_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton btnCart;
+    //FloatingActionButton btnCart;
+    CounterFab btnCart;
     ElegantNumberButton numberButton;
 
     String pantId="";
@@ -54,7 +56,7 @@ public class PantDetail extends AppCompatActivity {
 
         //init view
         numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
-        btnCart = (FloatingActionButton) findViewById(R.id.btnCart);
+        btnCart = (CounterFab) findViewById(R.id.btnCart);
 
         //Function for button add to cart in pant_detail_activity
         btnCart.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +66,8 @@ public class PantDetail extends AppCompatActivity {
                 new Database(getBaseContext()).addToCart(new Order(
                         pantId,
                         currentPant.getName(),
-                        numberButton.getNumber()
+                        numberButton.getNumber(),
+                        currentPant.getPrice()
                         //currentPant.getDiscount()
 
                 ));
@@ -73,6 +76,7 @@ public class PantDetail extends AppCompatActivity {
             }
         });
 
+        btnCart.setCount(new  Database(this).getCountCart());
 
         //pant_description = (TextView) findViewById(R.id.pant_description);
         pant_name = (TextView) findViewById(R.id.pant_name);
