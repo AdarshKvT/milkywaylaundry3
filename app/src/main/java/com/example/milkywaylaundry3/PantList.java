@@ -92,7 +92,6 @@ public class PantList extends AppCompatActivity {
                 return new PantViewHolder(itemView);
             }
 
-
             @Override
             protected void onBindViewHolder(PantViewHolder viewHolder, final int position, final Pant model) {
                 //viewHolder.pant_name.setText(model.getName());
