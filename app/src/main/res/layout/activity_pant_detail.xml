@@ -130,7 +130,6 @@
                      app:backGroundColor="@color/colorAccent"
                      app:initialNumber="0"
                      app:finalNumber="20">
-
                  </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
 

@@ -103,9 +103,10 @@ public class Home extends AppCompatActivity
 
         //Set Name for user
         View headerView = navigationView.getHeaderView(0);
-        txtFullName = (TextView)headerView.findViewById(R.id.txtFillName);
-        assert currentUser != null;
-        if (txtFullName == null) throw new AssertionError();
+        txtFullName = (TextView)headerView.findViewById(R.id.txtFullName);
+/*        assert currentUser != null;
+        if (txtFullName == null) throw new AssertionError();*/
+        //if (currentUser != null)
         txtFullName.setText(currentUser.getName());
 
         //Load Menu

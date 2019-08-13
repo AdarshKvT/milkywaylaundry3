@@ -16,7 +16,6 @@
         android:layout_height="match_parent">
 
 
-
         <LinearLayout
 
             android:weightSum="10"
@@ -28,7 +27,7 @@
             >
 
             <TextView
-                android:id="@+id/pant_name1"
+                android:id="@+id/pant_name"
                 android:text="Name of Pant"
                 android:textSize="20sp"
                 android:gravity="center"

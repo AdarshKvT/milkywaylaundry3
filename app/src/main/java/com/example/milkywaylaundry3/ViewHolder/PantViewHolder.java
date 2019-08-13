@@ -27,7 +27,6 @@ public class PantViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public PantViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        //if (pant_name == null) throw new AssertionError();
 
         pant_name = (TextView)itemView.findViewById(R.id.pant_name);
         //pant_image = (ImageView)itemView.findViewById(R.id.pant_image);

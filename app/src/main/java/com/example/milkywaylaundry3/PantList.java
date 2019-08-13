@@ -94,10 +94,8 @@ public class PantList extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(PantViewHolder viewHolder, final int position, final Pant model) {
-                //viewHolder.pant_name.setText(model.getName());
-                //viewHolder.pant_name.setText(String.format("%s",model.getName().toString()));
+                viewHolder.pant_name.setText(model.getName());
                 viewHolder.pant_price.setText(String.format("$ %s", model.getPrice().toString()));
-
 
                 //Quick Cart
                  viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {

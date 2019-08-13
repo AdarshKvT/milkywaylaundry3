@@ -37,7 +37,7 @@ public class Cart extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference requests;
 
-    TextView txtTotalPrice;
+    public TextView txtTotalPrice;
     FButton btnPlace;
 
     List<Order> cart = new ArrayList<>();
@@ -132,12 +132,8 @@ public class Cart extends AppCompatActivity {
         //Calculation total price
         int total = 0;
         for (Order order : cart) {
-            try {
-                assert order != null;
+                //assert order != null;
                 total += (Integer.parseInt(order.getPrice()) * (Integer.parseInt(order.getQuantity())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
             Locale locale = new Locale("en", "US");
 
