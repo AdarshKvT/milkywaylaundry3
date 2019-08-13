@@ -1,6 +1,9 @@
 package com.example.milkywaylaundry3.Model;
 
-public class Pant {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Pant implements Parcelable {
     private String Name, Image, Price,  MenuId;
 
     //constructor for class
@@ -16,6 +19,38 @@ public class Pant {
     }
 
     //Getter and Setter for all varibales
+
+    protected Pant(Parcel in) {
+        Name = in.readString();
+        Image = in.readString();
+        Price = in.readString();
+        MenuId = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Name);
+        dest.writeString(Image);
+        dest.writeString(Price);
+        dest.writeString(MenuId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Pant> CREATOR = new Creator<Pant>() {
+        @Override
+        public Pant createFromParcel(Parcel in) {
+            return new Pant(in);
+        }
+
+        @Override
+        public Pant[] newArray(int size) {
+            return new Pant[size];
+        }
+    };
 
     public String getName() {
         return Name;
