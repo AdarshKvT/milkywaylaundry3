@@ -1,2 +1,3 @@
 # milkywaylaundry3
-# An app for Laundry service where laundry guy wil pick up the laundry and deliver it back after wash.
+# An app for Laundry service where laundry guy will pick up the laundry and deliver it back after wash.
+# App use Google's Firebase real time Database adn sqllite datbase locally. 
